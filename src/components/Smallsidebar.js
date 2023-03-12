@@ -14,6 +14,10 @@ const Smallsidebar = () => {
   const dispatch = useDispatch()
   const { isSideBarOpen } = useSelector((state) => state.user)
 
+  const toggle = () => {
+    dispatch(toggleSideBar())
+  }
+
   return (
     <Wrapper>
       <div
@@ -24,17 +28,14 @@ const Smallsidebar = () => {
         }
       >
         <div className='content'>
-          <button
-            className='close-btn'
-            onClick={() => dispatch(toggleSideBar())}
-          >
+          <button className='close-btn' onClick={() => toggle()}>
             <FaTimes />
           </button>
           <header>
             <Logo />
           </header>
 
-          <NavLinks toggleSideBar={toggleSideBar} />
+          <NavLinks toggleSideBar={toggle} />
         </div>
       </div>
     </Wrapper>

@@ -7,6 +7,7 @@ import {
   handleChange,
   clearItems,
   createJob,
+  editJob,
 } from '../../features/job/jobSlice'
 
 const Addjob = () => {
@@ -33,6 +34,16 @@ const Addjob = () => {
       return
     }
 
+    if (isEditing) {
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: { position, company, jobLocation, jobType, status },
+        })
+      )
+      return
+    }
+
     dispatch(createJob({ position, company, jobLocation, status, jobType }))
   }
 
@@ -44,12 +55,14 @@ const Addjob = () => {
   }
 
   useEffect(() => {
-    dispatch(
-      handleChange({
-        name: 'jobLocation',
-        value: user.location,
-      })
-    )
+    if (!isEditing) {
+      dispatch(
+        handleChange({
+          name: 'jobLocation',
+          value: user.location,
+        })
+      )
+    }
   }, [])
 
   return (
