@@ -7,6 +7,8 @@ import {
   removeFromLocalStorage,
   getFromLocalStorage,
 } from '../../utils/localStorage'
+import { clearItems } from '../job/jobSlice'
+import { clearAllJobsState } from '../allJobs/allJobs'
 
 const initialState = {
   isLoading: false,
@@ -54,6 +56,20 @@ export const updateUser = createAsyncThunk(
         return thunkAPI.rejectWithValue(error.response.data.msg)
       }
       return thunkAPI.rejectWithValue(error.response.data.msg)
+    }
+  }
+)
+
+export const clearStoreThunk = createAsyncThunk(
+  'user/clearStoreThunk',
+  async (message, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(logoutUser())
+      thunkAPI.dispatch(clearAllJobsState())
+      thunkAPI.dispatch(clearItems())
+      return Promise.resolve()
+    } catch (error) {
+      return Promise.reject()
     }
   }
 )
@@ -120,6 +136,9 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, { payload }) => {
         state.isLoading = false
         toast.error(payload)
+      })
+      .addCase(clearStoreThunk.rejected, (state) => {
+        toast.error('There is no items')
       })
   },
 })

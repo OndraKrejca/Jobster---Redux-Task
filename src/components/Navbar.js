@@ -11,7 +11,7 @@ import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 import Logo from './Logo'
 
 //Action userSlice
-import { toggleSideBar, logoutUser } from '../features/user/userSlice'
+import { toggleSideBar, clearStoreThunk } from '../features/user/userSlice'
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false)
@@ -46,7 +46,7 @@ const Navbar = () => {
               type='button'
               className='dropdown-btn'
               onClick={() => {
-                dispatch(logoutUser('Logout done'))
+                dispatch(clearStoreThunk('Logout done'))
                 setShowLogout(false)
               }}
             >
